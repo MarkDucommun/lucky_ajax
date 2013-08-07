@@ -10,6 +10,10 @@ post '/rolls' do
   value = params[:value] ? params[:value].to_i : nil
 
   @roll = value ? Roll.create({ value: value }) : Roll.create
-
-  erb :index  # HINT: what does this do? what should we do instead?
+  
+  if request.xhr?
+    erb :_die_image, layout: false, locals: {roll: @roll} 
+  else
+    erb :index
+  end
 end
